@@ -5,7 +5,6 @@ using std::min;
 using std::max;
 #include <cmath>
 
-
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     int counterx; int countery;
     if(Nx==1){
