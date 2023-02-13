@@ -9,26 +9,48 @@ using std::max;
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     int counterx; int countery;
-    if(Nx==1 && Ny==1){
-      counterx=nx+1;
-      countery=ny+1;
-    }
-    else{  
-    //int countery=0;
-    //int counterx=0;
-    if(I<Nx-1){
-        counterx=(nx+1)/(Nx-1); //1280
+    if(Nx==1){
+       counterx=nx+1;   
     }
     else{
-        counterx=(nx+1)%(Nx-1); //1
+      if(I<Nx-1){
+        counterx=(nx+1)/(Nx-1); 
+      }
+      else{
+        counterx=(nx+1)%(Nx-1); 
+      }  
     }
-    if(J<Ny-1){
-        countery=(ny+1)/(Ny-1); //1280
+    
+    if(Ny==1){
+       countery=ny+1;   
     }
     else{
-        countery=(ny+1)%(Ny-1); //1
-    }    
+      if(J<Ny-1){
+        countery=(ny+1)/(Ny-1); 
+      }
+      else{
+        countery=(ny+1)%(Ny-1); 
+      }  
     }
+    
+//     if(Nx==1 && Ny==1){
+//       counterx=nx+1;
+//       countery=ny+1;
+//     }
+//     else{  
+//     if(I<Nx-1){
+//         counterx=(nx+1)/(Nx-1); //1280
+//     }
+//     else{
+//         counterx=(nx+1)%(Nx-1); //1
+//     }
+//     if(J<Ny-1){
+//         countery=(ny+1)/(Ny-1); //1280
+//     }
+//     else{
+//         countery=(ny+1)%(Ny-1); //1
+//     }    
+//     }
     for(int i=I*counterx;i<I*counterx+counterx;i++){
         for(int j=J*countery;j<J*countery+countery;j++){
            if(i==0){
