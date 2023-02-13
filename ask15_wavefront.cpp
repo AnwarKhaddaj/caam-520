@@ -27,15 +27,15 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
         for(int j=J*countery;j<J*countery+countery;j++){
            if(i==0){
             data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*j/ny);
-            printf("2 %d %d \t",i,j);
+            //printf("2 %d %d \t",i,j);
            }
            else if(j==0){
             data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*i/nx);
-            printf("2");
+            //printf("2");
            }
            else{
              data[cartesian2flat(i,j,ny+1)]=Cx*data[cartesian2flat(i-1,j,ny+1)]+Cy*data[cartesian2flat(i,j-1,ny+1)];
-             printf("3");
+             //printf("3");
            }
         }
     }
