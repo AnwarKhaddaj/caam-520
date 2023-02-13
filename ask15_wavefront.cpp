@@ -4,6 +4,7 @@
 #define _USE_MATH_DEFINES
 using std::min;
 using std::max;
+#include <cstdio>
 #include <cmath>
 #include <math.h>
 
