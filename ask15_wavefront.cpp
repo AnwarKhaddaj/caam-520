@@ -1,11 +1,12 @@
 #include "wavefront.h"
 #include "omp.h"
 // #include <algorithm> //ask about this 
-#define _USE_MATH_DEFINES
+#include <math.h>
+//#define _USE_MATH_DEFINES
 using std::min;
 using std::max;
 #include <cmath>
-// #include <math.h>
+
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     int counterx; int countery;
