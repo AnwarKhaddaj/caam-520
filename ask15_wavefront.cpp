@@ -26,12 +26,15 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
         for(int j=J*countery;j<J*countery+countery;j++){
            if(i==0){
             data[cartesian2flat(i,j,ny)]=sin(2*M_PI*j/ny);
+            printf("2");
            }
            else if(j==0){
             data[cartesian2flat(i,j,ny)]=sin(2*M_PI*i/nx);
+            printf("4");
            }
            else{
              data[cartesian2flat(i,j,ny)]=Cx*data[cartesian2flat(i-1,j,ny)]+Cy*data[cartesian2flat(i,j-1,ny)];
+             printf("3");
            }
         }
     }
@@ -45,6 +48,7 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
         #pragma omp parallel for
         for(int I=std::max(0,w-Nx+1);I<std::min(w,Nx);I++){
             J=min(w-I,Ny-1)-counter;
+            printf("inside for parallel 1");
             process_block(data, I, J,nx, ny, Nx, Ny);
             counter=counter+1;
         }
