@@ -50,6 +50,9 @@ int main(int argc, char* argv[]) {
       ;  //time420(data, nx, ny, Nx);
     else if (choice == CAAM_520)
         time520(data, nx, ny, Nx, Ny);
+        for(int i=0;i<(ny+1)*(nx+1);i++){
+            printf("%d \n",data[i]);
+        }
     else {
         printf("Invalid choice entered; exiting program...\n");
         return -3;
