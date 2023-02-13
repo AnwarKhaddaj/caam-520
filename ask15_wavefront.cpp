@@ -9,6 +9,15 @@ using std::max;
 #include <math.h>
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
+    if(Nx==1 && Ny==1){
+        
+       counterx=nx+1;
+       countery=ny+1;
+        
+    }
+    else{
+        
+        
     int countery=0;
     int counterx=0;
     if(I<Nx-1){
@@ -22,6 +31,9 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     }
     else{
         countery=(ny+1)%(Ny-1); //1
+    }
+        
+        
     }
     for(int i=I*counterx;i<I*counterx+counterx;i++){
         for(int j=J*countery;j<J*countery+countery;j++){
