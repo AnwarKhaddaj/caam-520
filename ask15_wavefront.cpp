@@ -19,8 +19,8 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     else{
         
         
-    int countery=0;
-    int counterx=0;
+    //int countery=0;
+    //int counterx=0;
     if(I<Nx-1){
         counterx=(nx+1)/(Nx-1); //1280
     }
