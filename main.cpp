@@ -64,15 +64,15 @@ int main(int argc, char* argv[]) {
 }
 
 
-// void time420(double* data, int nx, int ny, int Nx) {
-//     steady_clock::time_point start = steady_clock::now();
-//     wavefront420(data, nx, ny, Nx);
-//     steady_clock::time_point end = steady_clock::now();
-//     auto diff = end - start;
+void time420(double* data, int nx, int ny, int Nx) {
+     steady_clock::time_point start = steady_clock::now();
+     wavefront420(data, nx, ny, Nx);
+     steady_clock::time_point end = steady_clock::now();
+     auto diff = end - start;
 
-//     printf("Total time (420): \n    Nx = %d\n    T (microseconds): %.5lf\n", Nx, 
-//         std::chrono::duration<double, micro>(diff).count() );
-// }
+     printf("Total time (420): \n    Nx = %d\n    T (microseconds): %.5lf\n", Nx, 
+         std::chrono::duration<double, micro>(diff).count() );
+ }
 
 
 void time520(double* data, int nx, int ny, int Nx, int Ny) {
