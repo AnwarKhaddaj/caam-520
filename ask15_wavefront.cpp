@@ -1,9 +1,11 @@
+#include <algorithm> 
+#include <cmath>
+
 #include "wavefront.h"
 #include "omp.h"
-#include <algorithm> 
+
 using std::min;
 using std::max;
-#include <cmath>
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     int counterx; int countery;
@@ -48,7 +50,8 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
 
 void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
     int Nw=Nx+Ny-1;
-    int J; int counter;
+    int J;
+    int counter;
     for(int w=0;w<Nw;w++){
         counter=0;
         #pragma omp parallel for
