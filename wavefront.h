@@ -1,8 +1,8 @@
 #ifndef WAVEFRONT_H
 #define WAVEFRONT_H
 
-const int nx = 6400;
-const int ny = 6400;
+const int nx = 32;
+const int ny = 32;
 
 const double dx = 1.0 / nx;
 const double dy = 1.0 / ny;
