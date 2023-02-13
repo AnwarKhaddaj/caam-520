@@ -15,6 +15,7 @@ using std::stoi;
 const int CAAM_420 = 420;
 const int CAAM_520 = 520;
 
+void time420(double* data, int nx, int ny, int Nx);
 void time520(double* data, int nx, int ny, int Nx, int Ny);
 
 int main(int argc, char* argv[]) {
