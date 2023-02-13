@@ -9,7 +9,6 @@ using std::max;
 #include <math.h>
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
-    printf("5");
     int countery=0;
     int counterx=0;
     if(I<Nx-1){
@@ -32,11 +31,9 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
            }
            else if(j==0){
             data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*i/nx);
-            printf("4");
            }
            else{
              data[cartesian2flat(i,j,ny+1)]=Cx*data[cartesian2flat(i-1,j,ny+1)]+Cy*data[cartesian2flat(i,j-1,ny+1)];
-             printf("3");
            }
         }
     }
@@ -50,7 +47,6 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
         #pragma omp parallel for
         for(int I=std::max(0,w-Nx+1);I<=std::min(w,Nx);I++){
             J=min(w-I,Ny-1)-counter;
-            printf("inside for parallel 1");
             process_block(data, I, J,nx, ny, Nx, Ny);
             counter=counter+1;
         }
