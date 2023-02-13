@@ -9,6 +9,7 @@ using std::max;
 #include <math.h>
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
+    printf("5");
     int countery=0;
     int counterx=0;
     if(I<Nx-1){
