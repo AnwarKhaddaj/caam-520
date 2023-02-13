@@ -28,7 +28,7 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
         for(int j=J*countery;j<J*countery+countery;j++){
            if(i==0){
             data[cartesian2flat(i,j,ny)]=sin(2*M_PI*j/ny);
-            printf("2 %f %f \t",i,j);
+            printf("2 %d %d \t",i,j);
            }
            else if(j==0){
             data[cartesian2flat(i,j,ny)]=sin(2*M_PI*i/nx);
