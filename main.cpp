@@ -52,6 +52,9 @@ int main(int argc, char* argv[]) {
     }
     else if (choice == CAAM_520){
         time520(data, nx, ny, Nx, Ny);
+        for(int i=0;i<(ny+1)*(nx+1);i++){
+            printf("%f \n",data[i]);
+        }
     }
     else {
         printf("Invalid choice entered; exiting program...\n");
