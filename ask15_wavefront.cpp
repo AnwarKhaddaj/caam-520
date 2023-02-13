@@ -4,7 +4,6 @@
 #define _USE_MATH_DEFINES
 using std::min;
 using std::max;
-#include <cstdio>
 #include <cmath>
 #include <math.h>
 
@@ -64,27 +63,7 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
     }
 }
 
-// void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
-//     int Nw=Nx+Ny-1; //number of waves
-//     int nb_of_threads=omp_get_num_threads();
 
-//     int J;
-//     //Spin-up phase
-//     for (int w=0;w<nb_of_threads-1;w++){
-//         #pragma omp parallel for
-//         {
-//         for(int I=0;I<=w;I++){
-//             int tid=omp_get_thread_num();
-//             J=w-I;
-//             #pragma omp critical
-//             { //only one thread to execute it at a time
-//                 process_block(data,I,J,nx,ny,Nx,Ny);
-//             }   
-//         }     
-//         }
-//     }
-//     //Fully spun-up phase
-//     int fully_spun_up_blocks=Nx*Ny-nb_of_threads*(nb_of_threads-1);//Nx*Ny-spin_up_blocks-spin_down_blocks. Spin_up_blocks=(nbofthreads)*(nbofthreads-1)/2 (Sumtorial formula)
-//     int nb_of_thread_cycles=fully_spun_up_blocks/nb_of_threads;
-//     int remainder=fully_spun_up_blocks%nb_of_threads;
-// }
+void wavefront420(double* data, int nx, int ny, int Nx){
+    
+}
