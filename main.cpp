@@ -47,13 +47,10 @@ int main(int argc, char* argv[]) {
 
     // Call the appropriate timing function
     if (choice == CAAM_420){
-      ;  //time420(data, nx, ny, Nx);
+       time420(data, nx, ny, Nx);
     }
     else if (choice == CAAM_520){
         time520(data, nx, ny, Nx, Ny);
-       // for(int i=0;i<(ny+1)*(nx+1);i++){
-         //   printf("%f \n",data[i]);
-        //}
     }
     else {
         printf("Invalid choice entered; exiting program...\n");
