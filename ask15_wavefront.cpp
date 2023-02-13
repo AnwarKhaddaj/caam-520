@@ -39,13 +39,14 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
 
 void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
     int Nw=Nx+Ny-1;//10+0=11 waves
-    int J;
+    int J; int counter;
     for(int w=0;w<Nw;w++){
+        counter=0;
         #pragma omp parallel for
         for(int I=std::max(0,w-Nx+1);I<std::min(w,Nx);I++){
-            J=min(w-I,Ny-1);
+            J=min(w-I,Ny-1)-counter;
             process_block(data, I, J,nx, ny, Nx, Ny);
-            J=J-1;
+            counter=counter+1;
         }
     }
 }
