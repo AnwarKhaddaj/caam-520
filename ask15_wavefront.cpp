@@ -47,7 +47,7 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
     for(int w=0;w<Nw;w++){
         counter=0;
         #pragma omp parallel for
-        for(int I=std::max(0,w-Nx+1);I<std::min(w,Nx);I++){
+        for(int I=std::max(0,w-Nx+1);I<=std::min(w,Nx);I++){
             J=min(w-I,Ny-1)-counter;
             printf("inside for parallel 1");
             process_block(data, I, J,nx, ny, Nx, Ny);
