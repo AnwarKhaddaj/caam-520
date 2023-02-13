@@ -16,7 +16,7 @@ inline int cartesian2flat(int i, int j, int ny) {
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny);
 
-//void wavefront420(double* data, int nx, int ny, int Nx); // Ny will = the number of threads
+void wavefront420(double* data, int nx, int ny, int Nx); // Ny will = the number of threads
 
 void wavefront520(double* data, int nx, int ny, int Nx, int Ny);
 
