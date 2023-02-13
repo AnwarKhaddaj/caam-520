@@ -1,7 +1,7 @@
 #include "wavefront.h"
 #include "omp.h"
-// #include <algorithm> //ask about this 
-#include <math.h>
+#include <algorithm> //ask about this 
+//#include <math.h>
 //#define _USE_MATH_DEFINES
 using std::min;
 using std::max;
