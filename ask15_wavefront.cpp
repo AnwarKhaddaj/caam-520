@@ -11,8 +11,8 @@ using std::max;
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     if(Nx==1 && Ny==1){
         
-       counterx=nx+1;
-       countery=ny+1;
+      int counterx=nx+1;
+      int countery=ny+1;
         
     }
     else{
