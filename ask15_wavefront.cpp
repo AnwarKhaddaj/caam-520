@@ -9,10 +9,11 @@ using std::max;
 #include <math.h>
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
+    int counterx; int countery;
     if(Nx==1 && Ny==1){
         
-      int counterx=nx+1;
-      int countery=ny+1;
+      counterx=nx+1;
+      countery=ny+1;
         
     }
     else{
