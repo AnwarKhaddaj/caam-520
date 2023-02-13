@@ -10,7 +10,8 @@ using std::max;
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     int counterx; 
     int countery;
-    if(Nx==1){
+    //Finding the number of nodes in a selected block
+    if(Nx==1){ //base case
         counterx=nx+1;   
     }
     else{
@@ -22,7 +23,7 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
         }  
     }
     
-    if(Ny==1){
+    if(Ny==1){ //base case
         countery=ny+1;   
     }
     else{
@@ -32,38 +33,36 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
         else{
             countery=(ny+1)%(Ny-1); 
         }   
-    }
-    
+    }    
     for(int i=I*counterx;i<I*counterx+counterx;i++){
         for(int j=J*countery;j<J*countery+countery;j++){
             if(i==0){
-                data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*j/ny);
+                data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*j/ny);//initial boundary conditions
             }
             else if(j==0){
-                data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*i/nx);
+                data[cartesian2flat(i,j,ny+1)]=sin(2*M_PI*i/nx);//initial boundary conditions
             }
             else{
-                data[cartesian2flat(i,j,ny+1)]=Cx*data[cartesian2flat(i-1,j,ny+1)]+Cy*data[cartesian2flat(i,j-1,ny+1)];
+                data[cartesian2flat(i,j,ny+1)]=Cx*data[cartesian2flat(i-1,j,ny+1)]+Cy*data[cartesian2flat(i,j-1,ny+1)];//3-point stencil
             }
         }
     }
 }
 
 void wavefront520(double* data, int nx, int ny, int Nx, int Ny){
-    int Nw=Nx+Ny-1;
+    int Nw=Nx+Ny-1;//number of waves
     int J;
     int counter;
-    for(int w=0;w<Nw;w++){
+    for(int w=0;w<Nw;w++){//looping over the waves
         counter=0;
         #pragma omp parallel for
-        for(int I=std::max(0,w-Nx+1);I<=std::min(w,Nx);I++){
+        for(int I=std::max(0,w-Nx+1);I<=std::min(w,Nx);I++){//wavefront parallelization
             J=min(w-I,Ny-1)-counter;
-            process_block(data, I, J,nx, ny, Nx, Ny);
+            process_block(data, I, J, nx, ny, Nx, Ny);
             counter=counter+1;
         }
     }
 }
-
 
 void wavefront420(double* data, int nx, int ny, int Nx){
     
