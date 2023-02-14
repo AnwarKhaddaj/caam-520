@@ -10,30 +10,40 @@ using std::max;
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny){
     int counterx; 
     int countery;
-    //Finding the number of nodes in a selected block
-    if(Nx==1){ //base case
-        counterx=nx+1;   
+    if((nx+1)%Nx==0){
+        counterx=(nx+1)/Nx;
     }
     else{
-        if(I<Nx-1){
-            counterx=(nx+1)/(Nx-1); 
+        //Finding the number of nodes in a selected block
+        if(Nx==1){ //base case
+            counterx=nx+1;   
         }
         else{
-            counterx=(nx+1)%(Nx-1); 
-        }  
+            if(I<Nx-1){
+                counterx=(nx+1)/(Nx-1); 
+            }
+            else{
+                counterx=(nx+1)%(Nx-1); 
+            }  
+        }
     }
     
-    if(Ny==1){ //base case
-        countery=ny+1;   
+    if((ny+1)%Ny==0){
+        countery=(ny+1)/Ny;
     }
     else{
-        if(J<Ny-1){
-            countery=(ny+1)/(Ny-1); 
+        if(Ny==1){ //base case
+            countery=ny+1;   
         }
         else{
-            countery=(ny+1)%(Ny-1); 
-        }   
-    }    
+            if(J<Ny-1){
+                countery=(ny+1)/(Ny-1); 
+            }
+            else{
+                countery=(ny+1)%(Ny-1); 
+            }   
+        } 
+    }
     for(int i=I*counterx;i<I*counterx+counterx;i++){
         for(int j=J*countery;j<J*countery+countery;j++){
             if(i==0){
