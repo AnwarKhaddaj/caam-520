@@ -82,13 +82,13 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     for (int k=0; k<Nc; k++) {
     #pragma omp parallel for
     for (int i=0; i<Nt; i++) {
-        process_block(data, I_tracker[Nt*(Nt-1)/2+k*Nt+i],J_track[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
+        process_block(data, I_tracker[Nt*(Nt-1)/2+k*Nt+i],J_tracker[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
         }
     }
-    if (leftover!=0) {
+    if (remainder!=0) {
         #pragma omp parallel for
         for (int i = 0; i < remainder; i++) {
-            process_block(data, I_tracker[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],J_track[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
+            process_block(data, I_tracker[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],J_tracker[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
         }
     }
     //spin-down phase
