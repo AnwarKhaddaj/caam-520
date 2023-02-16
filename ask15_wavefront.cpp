@@ -11,8 +11,6 @@ using std::printf;
 
 const double PI = M_PI;
 
-int elements(int wave, int I, int J, int waves);//helper method to calculate the number of elements in a specific wave.
-
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny) {
     int x; 
     int y;
@@ -46,15 +44,15 @@ void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny) {
 void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     int Nw = Nx + Ny - 1;//total number of waves
     int J; 
-    int* I_track = new int[Nx*Ny];
-    int* J_track = new int[Nx*Ny];
+    int* I_tracker = new int[Nx*Ny];
+    int* J_tracker = new int[Nx*Ny];
     int count = 0;
     //storing the I indices and J indices while traversing them in a diagonal-wave format
     for(int w=0; w<Nw; w++) {
         for(int I=std::max(0, 1 + w - Nx); I<=std::min(Nx, w); I++) {
             J = w-I;
-            I_track[count] = I;
-            J_track[count] = J;
+            I_tracker[count] = I;
+            J_tracker[count] = J;
             count++;
             }
         }
@@ -74,32 +72,32 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     }
     int Nb_fullyparallel = Nx*Ny-Nt*(Nt-1); //number of blocks in fully parallelized region
     int Nc;//number of cycles: number of parallel regions
-    int leftover=0;
+    int remainder=0; //this will be the last part before spin-down i.e. some final work between fully parallel and spin-down
     if (Nb_fullyparallel % Nt == 0)
         Nc = Nb_fullyparallel/Nt;
     else {
         Nc = Nb_fullyparallel/Nt;
-        leftover = Nb_fullyparallel%Nt;
+        remainder = Nb_fullyparallel%Nt;
     }
     //fully parallel
-    for (int k = 0; k < Nc; k++) {
+    for (int k=0; k<Nc; k++) {
     #pragma omp parallel for
-    for (int i = 0; i < Nt; i++) {
-        process_block(data, I_track[Nt*(Nt-1)/2+k*Nt+i],J_track[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
+    for (int i=0; i<Nt; i++) {
+        process_block(data, I_tracker[Nt*(Nt-1)/2+k*Nt+i],J_track[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
         }
     }
-    if (leftover != 0) {
+    if (leftover!=0) {
         #pragma omp parallel for
-        for (int i = 0; i < leftover; i++) {
-            process_block(data, I_track[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],J_track[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
+        for (int i = 0; i < remainder; i++) {
+            process_block(data, I_tracker[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],J_track[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
         }
     }
     //spin-down phase
     int current_wave;
-        int w;
-        int wave;
+    int w;
+    int wave;
     for ( w = Nt-1-1; w >= 0; w--) {
-        wave = Nx+Ny-2-w;
+        wave= Nx+Ny-2-w;
         #pragma omp parallel for
         for (int I = Nx-1-w; I <= Nx-1; I++ ){
             J = wave-I;
@@ -107,16 +105,6 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
         }
     }
 }
-
-int elements(int wave, int I, int J, int Nw) { //how many elements in a specific wave
-    if (wave <= min(I,J)) 
-        return wave+1;
-    else if (wave > min(I,J) && wave <= Nw - min(I,J))
-        return min(I,J);
-    else
-        return Nw-wave;
-}
-
 void wavefront420(double* data, int nx, int ny, int Nx) {
     
 }
