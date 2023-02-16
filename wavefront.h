@@ -1,3 +1,4 @@
+//newest version
 #ifndef WAVEFRONT_H
 #define WAVEFRONT_H
 
