@@ -103,6 +103,8 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
             process_block(data, I, J, nx, ny, Nx, Ny);
         }
     }
+    delete [] I_tracker;
+    delete [] J_tracker;
 }
 void wavefront420(double* data, int nx, int ny, int Nx) {
     
