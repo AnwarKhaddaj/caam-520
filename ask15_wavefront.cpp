@@ -57,15 +57,18 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
         }
     }
     int Nt; //number of threads
-    #pragma omp parallel {
+    #pragma omp parallel 
+    {
         Nt = omp_get_num_threads();
     }
     //spin-up phase
     for (int w=0; w<Nt-1; w++) {
         #pragma omp parallel for
+        {
         for (int I=0; I<=w; I++){
             J = w-I;
             process_block(data, I, J, nx, ny, Nx, Ny);
+        }
         }
     }
     int Nb_fullyparallel = Nx*Ny-Nt*(Nt-1); //number of blocks in fully parallelized region
@@ -79,15 +82,18 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     }
     //fully parallel
     for (int k=0; k<Nc; k++) {
-    #pragma omp parallel for
-    for (int i=0; i<Nt; i++) {
-        process_block(data, I_tracker[Nt*(Nt-1)/2+k*Nt+i],J_tracker[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
+        #pragma omp parallel for
+        {
+        for (int i=0; i<Nt; i++) {
+            process_block(data, I_tracker[Nt*(Nt-1)/2+k*Nt+i],J_tracker[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
+        }
         }
     }
     if (remainder!=0) {
-        #pragma omp parallel for
+        #pragma omp parallel for{
         for (int i = 0; i < remainder; i++) {
             process_block(data, I_tracker[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],J_tracker[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
+        }
         }
     }
     //spin-down phase
@@ -97,9 +103,11 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     for (w=Nt-2; w>=0; w--) {
         wave_nb=Nx+Ny-w-2;//wave number
         #pragma omp parallel for
+        {
         for (int I=Nx-w-1; I<=Nx-1; I++){
             J=wave_nb-I;
             process_block(data, I, J, nx, ny, Nx, Ny);
+        }
         }
     }
     delete [] I_tracker;
