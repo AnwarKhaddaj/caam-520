@@ -65,10 +65,10 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     for (int w=0; w<Nt-1; w++) {
         #pragma omp parallel for
         {
-        for (int I=0; I<=w; I++){
-            J = w-I;
-            process_block(data, I, J, nx, ny, Nx, Ny);
-        }
+            for (int I=0; I<=w; I++){
+                J = w-I;
+                process_block(data, I, J, nx, ny, Nx, Ny);
+            }
         }
     }
     int Nb_fullyparallel = Nx*Ny-Nt*(Nt-1); //number of blocks in fully parallelized region
