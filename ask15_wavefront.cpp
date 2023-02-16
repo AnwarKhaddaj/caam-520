@@ -54,7 +54,6 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
             I_tracker[count] = I;
             J_tracker[count] = J;
             count++;
-            }
         }
     }
     int Nt; //number of threads
