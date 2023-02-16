@@ -59,7 +59,7 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     int Nt; //number of threads
     #pragma omp parallel 
     {
-    Nt = omp_get_num_threads();
+        Nt = omp_get_num_threads();
     }
     //spin-up phase
     for (int w=0; w<Nt-1; w++) {
