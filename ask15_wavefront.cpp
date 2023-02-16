@@ -9,9 +9,9 @@ using std::min;
 using std::max;
 using std::printf;
 
-int elements(int wave, int I, int J, int waves);//helper method to calculate the number of elements in a specific wave.
-
 const double PI = M_PI;
+
+int elements(int wave, int I, int J, int waves);//helper method to calculate the number of elements in a specific wave.
 
 void process_block(double* data, int I, int J, int nx, int ny, int Nx, int Ny) {
     int x; 
@@ -73,16 +73,16 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
         }
     }
     int Nb_fullyparallel = Nx*Ny-Nt*(Nt-1); //number of blocks in fully parallelized region
-    int num_cycles;
+    int Nc;//number of cycles: number of parallel regions
     int leftover=0;
     if (Nb_fullyparallel % Nt == 0)
-        num_cycles = Nb_fullyparallel/Nt;
+        Nc = Nb_fullyparallel/Nt;
     else {
-        num_cycles = Nb_fullyparallel/Nt;
+        Nc = Nb_fullyparallel/Nt;
         leftover = Nb_fullyparallel%Nt;
     }
     //fully parallel
-    for (int k = 0; k < num_cycles; k++) {
+    for (int k = 0; k < Nc; k++) {
     #pragma omp parallel for
     for (int i = 0; i < Nt; i++) {
         process_block(data, I_track[Nt*(Nt-1)/2+k*Nt+i],J_track[Nt*(Nt-1)/2+k*Nt+i],nx,ny,Nx,Ny);
@@ -91,7 +91,7 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     if (leftover != 0) {
         #pragma omp parallel for
         for (int i = 0; i < leftover; i++) {
-            process_block(data, I_track[Nt*(Nt-1)/2+(num_cycles-1)*Nt+(Nt-1)+i+1],J_track[Nt*(Nt-1)/2+(num_cycles-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
+            process_block(data, I_track[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],J_track[Nt*(Nt-1)/2+(Nc-1)*Nt+(Nt-1)+i+1],nx,ny,Nx,Ny);
         }
     }
     //spin-down phase
@@ -108,13 +108,13 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     }
 }
 
-int elements(int wave, int I, int J, int waves) { //how many elements in a specific wave
+int elements(int wave, int I, int J, int Nw) { //how many elements in a specific wave
     if (wave <= min(I,J)) 
         return wave+1;
-    else if (wave > min(I,J) && wave <= waves - min(I,J))
+    else if (wave > min(I,J) && wave <= Nw - min(I,J))
         return min(I,J);
     else
-        return waves-wave;
+        return Nw-wave;
 }
 
 void wavefront420(double* data, int nx, int ny, int Nx) {
