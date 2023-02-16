@@ -95,12 +95,12 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
     //spin-down phase
     int current_wave;
     int w;
-    int wave;
-    for ( w = Nt-1-1; w >= 0; w--) {
-        wave= Nx+Ny-2-w;
+    int wave_nb;
+    for (w=Nt-2; w>=0; w--) {
+        wave_nb=Nx+Ny-w-2;//wave number
         #pragma omp parallel for
-        for (int I = Nx-1-w; I <= Nx-1; I++ ){
-            J = wave-I;
+        for (int I=Nx-w-1; I<=Nx-1; I++){
+            J=wave_nb-I;
             process_block(data, I, J, nx, ny, Nx, Ny);
         }
     }
