@@ -153,7 +153,7 @@ void wavefront520(double* data, int nx, int ny, int Nx, int Ny) {
         for (int I = 0; I <= w; I++ ){
             J = w-I;
             process_block(data, I, J, nx, ny, Nx, Ny);
-            printf("%d %d\n",I,J);
+            //printf("%d %d\n",I,J);
         }
         //printf("\n");
     }
